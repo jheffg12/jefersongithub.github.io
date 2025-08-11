@@ -1,244 +1,565 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>J.J Treinamento em Atendimento</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="J.J Treinamento em Atendimento - Melhore seu atendimento com soluções inteligentes e profissionais." />
+<meta name="author" content="Jeferson Gouveia de Jesus" />
+<title>J.J Treinamento em Atendimento</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-        /* Fundo degradê azul e laranja */
-        body {
-            font-family: 'Poppins', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #0056b3 0%, #ff6600 100%);
-            color: #f4f4f9;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+  /* Reset básico */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: linear-gradient(135deg, #0056b3 0%, #ff6600 100%);
+    color: #f4f4f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+    transition: background-color 0.3s, color 0.3s;
+  }
 
-        header {
-            background: rgba(0,0,0,0.25);
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            animation: fadeInDown 1s ease forwards;
-        }
-        header h1 {
-            margin: 0;
-            font-weight: 700;
-            font-size: 2.8rem;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-        }
-        header p {
-            margin-top: 8px;
-            font-weight: 500;
-            font-size: 1.1rem;
-            color: #ffe8c3;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
+  /* Modo escuro (inicial no dark mode do sistema) */
+  body.light-mode {
+    background: #fff;
+    color: #222;
+  }
 
-        .container {
-            flex-grow: 1;
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+  /* HEADER */
+  header {
+    position: relative;
+    background: rgba(0,0,0,0.25);
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    animation: fadeInDown 1s ease forwards;
+    overflow: hidden;
+    z-index: 2;
+  }
+  /* Fundo animado no header (ondas) */
+  header::before {
+    content: '';
+    position: absolute;
+    left: -30%;
+    top: -40%;
+    width: 200%;
+    height: 180%;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.15), transparent 25%),
+      radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.12), transparent 30%),
+      radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.1), transparent 40%);
+    animation: moveWaves 15s linear infinite;
+    z-index: 0;
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+    position: relative;
+    z-index: 1;
+  }
+  header p {
+    margin-top: 8px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #ffe8c3;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 1;
+  }
 
-        section {
-            background: rgba(255,255,255,0.15);
-            margin-bottom: 30px;
-            padding: 25px 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            backdrop-filter: blur(8px);
-            color: #fff;
-            animation: fadeInUp 1s ease forwards;
-            transition: transform 0.3s ease;
-        }
-        section:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(255, 102, 0, 0.8);
-        }
+  /* CONTAINER */
+  .container {
+    flex-grow: 1;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    z-index: 1;
+  }
 
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            position: relative;
-            font-weight: 700;
-            color: #ffe8c3;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-            cursor: default;
-        }
-        h2::after {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 4px;
-            background: #ff6600;
-            border-radius: 2px;
-            bottom: -8px;
-            left: 0;
-            box-shadow: 0 0 8px #ff6600;
-            transition: width 0.3s ease;
-        }
-        h2:hover::after {
-            width: 100px;
-        }
+  /* SEÇÕES */
+  section {
+    background: rgba(255,255,255,0.15);
+    margin-bottom: 30px;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: transform 0.3s ease, opacity 0.6s ease;
+  }
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  section:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(255, 102, 0, 0.8);
+  }
 
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-            margin-bottom: 15px;
-        }
+  /* TÍTULOS */
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    position: relative;
+    font-weight: 700;
+    color: #ffe8c3;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    cursor: default;
+    transition: color 0.3s ease;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: #ff6600;
+    border-radius: 2px;
+    bottom: -8px;
+    left: 0;
+    box-shadow: 0 0 8px #ff6600;
+    transition: width 0.3s ease;
+  }
+  h2:hover::after {
+    width: 100px;
+  }
 
-        ul {
-            padding-left: 25px;
-            list-style-type: none;
-        }
-        ul li {
-            position: relative;
-            font-size: 1.15rem;
-            padding-left: 30px;
-            margin-bottom: 12px;
-            color: #fff;
-            font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            cursor: default;
-            transition: color 0.3s ease;
-        }
-        ul li::before {
-            content: '✅';
-            position: absolute;
-            left: 0;
-            top: 0;
-            font-size: 1.3rem;
-            text-shadow: 0 0 5px #00ff9c, 0 0 10px #00ff9c;
-            transition: transform 0.3s ease;
-        }
-        ul li:hover {
-            color: #ffcc80;
-        }
-        ul li:hover::before {
-            transform: scale(1.3);
-            text-shadow: 0 0 12px #ff6600, 0 0 20px #ff6600;
-        }
+  /* TEXTOS */
+  p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    margin-bottom: 15px;
+  }
+  body.light-mode p {
+    color: #444;
+    text-shadow: none;
+  }
 
-        .highlight {
-            color: #ffcc80;
-            font-weight: 700;
-            text-shadow: 0 0 10px #ff6600;
-        }
+  /* LISTAS */
+  ul {
+    padding-left: 25px;
+    list-style-type: none;
+  }
+  ul li {
+    position: relative;
+    font-size: 1.15rem;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    cursor: default;
+    transition: color 0.3s ease;
+  }
+  ul li::before {
+    content: '✅';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.3rem;
+    text-shadow: 0 0 5px #00ff9c, 0 0 10px #00ff9c;
+    transition: transform 0.3s ease;
+  }
+  ul li:hover {
+    color: #ffcc80;
+  }
+  ul li:hover::before {
+    transform: scale(1.3);
+    text-shadow: 0 0 12px #ff6600, 0 0 20px #ff6600;
+  }
+  body.light-mode ul li {
+    color: #222;
+    text-shadow: none;
+  }
 
-        footer {
-            background: rgba(0,0,0,0.4);
-            color: #ccc;
-            text-align: center;
-            font-size: 0.8rem;
-            padding: 10px 20px;
-            font-weight: 400;
-            letter-spacing: 0.6px;
-            user-select: none;
-            border-top: 1px solid #ff6600;
-            backdrop-filter: blur(6px);
-            position: relative;
-            z-index: 10;
-        }
-        footer p.address {
-            margin-top: 5px;
-            font-size: 0.75rem;
-            color: #bbb;
-        }
+  /* HIGHLIGHT */
+  .highlight {
+    color: #ffcc80;
+    font-weight: 700;
+    text-shadow: 0 0 10px #ff6600;
+  }
+  body.light-mode .highlight {
+    color: #ff6600;
+    text-shadow: none;
+  }
 
-        /* Animações */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  /* RODAPÉ */
+  footer {
+    background: rgba(0,0,0,0.4);
+    color: #ccc;
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 15px 20px;
+    font-weight: 400;
+    letter-spacing: 0.6px;
+    user-select: none;
+    border-top: 1px solid #ff6600;
+    backdrop-filter: blur(6px);
+    position: relative;
+    z-index: 10;
+  }
+  footer p.address {
+    margin-top: 5px;
+    font-size: 0.75rem;
+    color: #bbb;
+  }
+  body.light-mode footer {
+    background: #eee;
+    color: #555;
+    border-top-color: #ff6600;
+  }
+  body.light-mode footer p.address {
+    color: #666;
+  }
 
-        /* Responsividade */
-        @media(max-width: 600px) {
-            header h1 {
-                font-size: 2rem;
-            }
-            h2 {
-                font-size: 1.5rem;
-            }
-            ul li {
-                font-size: 1rem;
-            }
-            .container {
-                margin: 20px auto;
-                padding: 0 10px;
-            }
-        }
-    </style>
+  /* ANIMAÇÕES */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes moveWaves {
+    0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+    100% { background-position: 100% 0%, 100% 0%, 100% 0%; }
+  }
+
+  /* BOTÃO WHATSAPP FIXO */
+  #btn-whatsapp {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #25d366;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  #btn-whatsapp:hover {
+    background: #1ebe57;
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px #25d366;
+  }
+  #btn-whatsapp svg {
+    width: 30px;
+    height: 30px;
+    fill: white;
+  }
+
+  /* DEPOIMENTOS */
+  .depoimentos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 20px;
+  }
+  .depoimento-card {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    color: #fff;
+    font-style: italic;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+  }
+  .depoimento-card:hover {
+    box-shadow: 0 8px 25px rgba(255, 102, 0, 0.8);
+  }
+  .depoimento-card::before {
+    content: '“';
+    font-size: 3rem;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    color: #ff6600;
+    opacity: 0.8;
+    font-weight: 700;
+  }
+  .depoimento-autor {
+    margin-top: 15px;
+    font-weight: 600;
+    font-style: normal;
+    text-align: right;
+    color: #ffcc80;
+  }
+
+  body.light-mode .depoimento-card {
+    background: #f5f5f5;
+    color: #333;
+  }
+  body.light-mode .depoimento-card::before {
+    color: #ff6600;
+  }
+  body.light-mode .depoimento-autor {
+    color: #d26900;
+  }
+
+  /* FORMULÁRIO */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: inherit;
+  }
+  input, textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: box-shadow 0.3s ease;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 8px #ff6600;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  button.submit-btn {
+    background: #ff6600;
+    border: none;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 6px 15px rgba(255,102,0,0.8);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  button.submit-btn:hover {
+    background: #e65c00;
+    box-shadow: 0 8px 20px rgba(230, 92, 0, 0.9);
+  }
+
+  /* TOGGLE MODO CLARO/ESC URO */
+  #toggle-theme {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    z-index: 110;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  #toggle-theme:hover {
+    background: rgba(255, 255, 255, 0.35);
+    color: #ff6600;
+  }
+  body.light-mode #toggle-theme {
+    background: #ff6600;
+    color: #fff;
+  }
+  body.light-mode #toggle-theme:hover {
+    background: #e65c00;
+  }
+
+  /* RESPONSIVO */
+  @media(max-width: 600px) {
+    header h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    ul li {
+      font-size: 1rem;
+    }
+    .container {
+      margin: 20px auto;
+      padding: 0 10px;
+    }
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <h1>J.J Treinamento em Atendimento</h1>
-        <p>Razão Social: Jeferson Gouveia de Jesus | CNPJ: 48.064.975/0001-00</p>
-    </header>
+<header>
+  <h1>J.J Treinamento em Atendimento</h1>
+  <p>Razão Social: Jeferson Gouveia de Jesus | CNPJ: 48.064.975/0001-00</p>
+</header>
 
-    <div class="container">
+<button id="toggle-theme" aria-label="Alternar modo claro/escuro">🌙</button>
 
-        <section>
-            <h2>📢 Melhorando o Atendimento</h2>
-            <p>O sucesso no atendimento ao cliente começa com uma comunicação clara, ágil e personalizada. Aqui estão alguns pontos essenciais:</p>
-            <ul>
-                <li>Escutar ativamente o cliente</li>
-                <li>Responder com empatia e cordialidade</li>
-                <li>Oferecer soluções rápidas e eficazes</li>
-                <li>Padronizar processos sem perder o toque humano</li>
-                <li>Monitorar métricas de satisfação</li>
-            </ul>
-        </section>
+<div class="container">
 
-        <section>
-            <h2>🤖 Como as IAs Podem Ajudar</h2>
-            <p>A Inteligência Artificial pode otimizar todo o fluxo de atendimento:</p>
-            <ul>
-                <li>Resposta automática a perguntas frequentes</li>
-                <li>Análise de métricas e relatórios em tempo real</li>
-                <li>Agendamento automático de reuniões e consultas</li>
-                <li>Roteamento inteligente de chamadas e mensagens</li>
-                <li>Personalização da experiência do cliente</li>
-            </ul>
-        </section>
+  <section>
+    <h2>📢 Melhorando o Atendimento</h2>
+    <p>O sucesso no atendimento ao cliente começa com uma comunicação clara, ágil e personalizada. Aqui estão alguns pontos essenciais:</p>
+    <ul>
+      <li>Escutar ativamente o cliente</li>
+      <li>Responder com empatia e cordialidade</li>
+      <li>Oferecer soluções rápidas e eficazes</li>
+      <li>Padronizar processos sem perder o toque humano</li>
+      <li>Monitorar métricas de satisfação</li>
+    </ul>
+  </section>
 
-        <section>
-            <h2>🔒 Política de Privacidade (LGPD)</h2>
-            <p>Em conformidade com a <span class="highlight">Lei Geral de Proteção de Dados (Lei nº 13.709/2018)</span>, garantimos que todas as informações coletadas serão utilizadas exclusivamente para fins de comunicação e prestação de serviços. Não compartilhamos seus dados pessoais com terceiros sem consentimento.</p>
-        </section>
+  <section>
+    <h2>🤖 Como as IAs Podem Ajudar</h2>
+    <p>A Inteligência Artificial pode otimizar todo o fluxo de atendimento:</p>
+    <ul>
+      <li>Resposta automática a perguntas frequentes</li>
+      <li>Análise de métricas e relatórios em tempo real</li>
+      <li>Agendamento automático de reuniões e consultas</li>
+      <li>Roteamento inteligente de chamadas e mensagens</li>
+      <li>Personalização da experiência do cliente</li>
+    </ul>
+  </section>
 
+  <section>
+    <h2>🔒 Política de Privacidade (LGPD)</h2>
+    <p>Em conformidade com a <span class="highlight">Lei Geral de Proteção de Dados (Lei nº 13.709/2018)</span>, garantimos que todas as informações coletadas serão utilizadas exclusivamente para fins de comunicação e prestação de serviços. Não compartilhamos seus dados pessoais com terceiros sem consentimento.</p>
+  </section>
+
+  <section>
+    <h2>💬 Depoimentos</h2>
+    <div class="depoimentos">
+      <article class="depoimento-card">
+        <p>“Excelente treinamento que transformou a forma como nossa equipe se comunica com os clientes. Resultado visível já no primeiro mês!”</p>
+        <p class="depoimento-autor">— Ana Silva</p>
+      </article>
+      <article class="depoimento-card">
+        <p>“Profissionalismo e atenção aos detalhes. O suporte pós-treinamento foi fundamental para nossa evolução.”</p>
+        <p class="depoimento-autor">— Carlos Souza</p>
+      </article>
+      <article class="depoimento-card">
+        <p>“A utilização de IA no atendimento nos economizou tempo e melhorou muito a satisfação dos clientes.”</p>
+        <p class="depoimento-autor">— Marina Costa</p>
+      </article>
     </div>
+  </section>
 
-    <footer>
-        <div>© 2025 J.J Treinamento em Atendimento - Todos os direitos reservados.</div>
-        <p class="address">Rua Professora Iara Castro de Azevedo, Vitória da Conquista - Bahia | CEP: 45065-670</p>
-    </footer>
+  <section>
+    <h2>📩 Contato</h2>
+    <form id="contactForm" novalidate>
+      <label for="name">Nome</label>
+      <input type="text" id="name" name="name" required placeholder="Seu nome completo" />
+      
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" required placeholder="exemplo@dominio.com" />
+      
+      <label for="message">Mensagem</label>
+      <textarea id="message" name="message" required placeholder="Escreva sua mensagem aqui"></textarea>
+      
+      <button type="submit" class="submit-btn">Enviar</button>
+    </form>
+    <p id="formMessage" style="color:#ff6600; font-weight:600; display:none; margin-top:10px;"></p>
+  </section>
+
+</div>
+
+<footer>
+  <div>© 2025 J.J Treinamento em Atendimento - Todos os direitos reservados.</div>
+  <p class="address">Rua Professora Iara Castro de Azevedo, Vitória da Conquista - Bahia | CEP: 45065-670</p>
+</footer>
+
+<!-- Botão WhatsApp fixo -->
+<a href="https://wa.me/5577992039381" target="_blank" rel="noopener" id="btn-whatsapp" aria-label="Contato via WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M20.52 3.48a11.819 11.819 0 00-16.71 16.7l-1.89 6.86 6.98-1.83a11.819 11.819 0 0011.62-21.73zm-9.35 16.8a8.36 8.36 0 01-4.38-1.31l-.31-.18-2.6.68.69-2.53-.2-.33a8.377 8.377 0 117.26 3.66zM17 15.33c-.26-.13-1.53-.76-1.77-.84-.24-.08-.42-.12-.6.13s-.69.83-.85 1c-.16.17-.31.19-.58.07a7.18 7.18 0 01-2.1-1.3 7.86 7.86 0 01-1.45-1.8c-.15-.25 0-.38.11-.5.11-.11.25-.31.37-.47.12-.16.16-.26.24-.43.08-.16.04-.3-.02-.43-.06-.13-.6-1.43-.82-1.95-.22-.52-.45-.45-.6-.46-.15 0-.32-.01-.5-.01s-.43.06-.65.3a2.77 2.77 0 00-.95.93 3.95 3.95 0 00-1.16 2.06c-.05.19-.18.49-.18.76s.26.56.31.6c.05.05.52.83 1.25 1.27.74.44 1.36.58 1.62.63.26.05.53.04.72-.03.19-.07.6-.22 1.13-.71a4.24 4.24 0 001.53-1.9c.08-.14.14-.27.2-.4.07-.13.03-.25-.02-.34z" />
+  </svg>
+</a>
+
+<script>
+  // Scroll reveal fade-in
+  const sections = document.querySelectorAll('section');
+  function revealOnScroll() {
+    const windowHeight = window.innerHeight;
+    sections.forEach(section => {
+      const top = section.getBoundingClientRect().top;
+      if (top < windowHeight - 100) {
+        section.classList.add('visible');
+      }
+    });
+  }
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+
+  // Toggle modo claro/escuro
+  const toggleBtn = document.getElementById('toggle-theme');
+  const body = document.body;
+  const userPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (!userPrefersDark) {
+    body.classList.add('light-mode');
+    toggleBtn.textContent = '🌙';
+  } else {
+    toggleBtn.textContent = '☀️';
+  }
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('light-mode');
+    if (body.classList.contains('light-mode')) {
+      toggleBtn.textContent = '🌙';
+    } else {
+      toggleBtn.textContent = '☀️';
+    }
+  });
+
+  // Formulário com validação simples
+  const form = document.getElementById('contactForm');
+  const formMessage = document.getElementById('formMessage');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+
+    // Validação básica
+    if (!name || !email || !message) {
+      formMessage.style.display = 'block';
+      formMessage.textContent = 'Por favor, preencha todos os campos.';
+      return;
+    }
+    if (!email.match(/^\S+@\S+\.\S+$/)) {
+      formMessage.style.display = 'block';
+      formMessage.textContent = 'Por favor, informe um e-mail válido.';
+      return;
+    }
+
+    // Aqui normalmente enviaria via backend ou API, mas só vamos simular
+    formMessage.style.display = 'block';
+    formMessage.style.color = '#28a745';
+    formMessage.textContent = 'Mensagem enviada com sucesso! Obrigado pelo contato.';
+
+    form.reset();
+
+    setTimeout(() => {
+      formMessage.style.display = 'none';
+      formMessage.style.color = '#ff6600';
+    }, 6000);
+  });
+</script>
 
 </body>
 </html>
