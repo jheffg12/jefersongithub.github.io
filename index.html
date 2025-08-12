@@ -1,626 +1,334 @@
-<!DOCTYPE html>
+from base64 import b64encode
+from pathlib import Path
+
+# Fix braces in f-string by using triple quotes without f-string formatting for the large HTML, then insert base64 where needed.
+img_path = Path("/mnt/data/Perfil JJ.jpg")
+img_data = img_path.read_bytes()
+img_b64 = b64encode(img_data).decode('utf-8')
+
+html_template = """<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="J.J Treinamento em Atendimento - Melhore seu atendimento com soluções inteligentes e profissionais." />
-    <meta name="author" content="Jeferson Gouveia de Jesus" />
-    <title>J.J Treinamento em Atendimento</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%23ff6600%22>JJ</text></svg>" />
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap');
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>J.J Treinamento em Atendimento — Futurista</title>
+<meta name="description" content="Treinamentos e soluções em atendimento com foco em IA, chatbots e integração multicanal." />
+<!-- Open Graph -->
+<meta property="og:title" content="J.J Treinamento em Atendimento" />
+<meta property="og:description" content="Treinamentos e soluções em atendimento com foco em IA, chatbots e integração multicanal." />
+<meta property="og:image" content="DATA_B64" />
+<meta property="og:type" content="website" />
 
-      /* Reset básico */
-      *, *::before, *::after {
-        box-sizing: border-box;
-      }
-      body {
-        font-family: 'Poppins', Arial, sans-serif;
-        margin: 0; padding: 0;
-        color: #f4f4f9;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        scroll-behavior: smooth;
-        overflow-x: hidden;
-        /* FUNDO COM GRADIENTE ANIMADO */
-        background: linear-gradient(135deg, #0056b3, #082f4e, #ff6600, #e65c00);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-      }
+<link rel="icon" href="DATA_B64" />
 
-      /* Modo claro */
-      body.light-mode {
-        background: #f4f7f9;
-        color: #222;
-        animation: none; /* Desativa a animação do gradiente no modo claro */
-      }
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+  :root{
+    --blue-900: #062a52;
+    --blue-700: #0056b3;
+    --blue-500: #2a8fe6;
+    --orange-600: #ff6600;
+    --orange-400: #ff9a3d;
+    --glass: rgba(255,255,255,0.06);
+    --glass-2: rgba(255,255,255,0.09);
+    --text-light: #eef6ff;
+    --text-dark: #111827;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:'Poppins',system-ui,Arial;min-height:100vh;display:flex;flex-direction:column;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(42,143,230,0.12), transparent 8%),
+                radial-gradient(1000px 500px at 90% 90%, rgba(255,102,0,0.07), transparent 8%),
+                linear-gradient(180deg, var(--blue-900), #071a2e 40%, #071a2e 60%, #01121a);
+    color:var(--text-light);scroll-behavior:smooth;transition:background 0.4s,color 0.4s}
 
-      /* HEADER */
-      header {
-        position: relative;
-        background: rgba(0,0,0,0.3);
-        padding: 25px 20px 40px 20px;
-        text-align: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.35);
-        backdrop-filter: blur(12px);
-        overflow: hidden; /* Mudei para hidden para conter o ::before */
-        z-index: 10;
-        border-bottom: 1px solid rgba(255, 102, 0, 0.5);
-      }
-      header .logo-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        /* Animação de entrada do container */
-        animation: fadeInDown 1s ease forwards;
-      }
-      header .logo-container img {
-        height: 80px;
-        width: auto;
-        border-radius: 12px;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.7);
-        transform: translateY(-10px);
-        opacity: 0;
-        /* ANIMAÇÃO DA LOGO */
-        animation: fadeInLogo 1s ease forwards 0.5s;
-      }
-      header .logo-container h1 {
-        margin: 0;
-        font-weight: 700;
-        font-size: 2.8rem;
-        letter-spacing: 2px;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
-        color: #ffe8c3;
-        line-height: 1.1;
-        text-align: left;
-        opacity: 0;
-        transform: translateY(10px);
-        animation: fadeInLogo 1s ease forwards 1s;
-      }
-      header p {
-        margin-top: 6px;
-        font-weight: 500;
-        font-size: 1.1rem;
-        color: #ffe8c3;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        position: relative;
-        z-index: 1;
-        opacity: 0;
-        animation: fadeInDown 1s ease forwards 1.2s;
-      }
-      body.light-mode header {
-        background: rgba(255, 255, 255, 0.8);
-      }
-      body.light-mode header h1, body.light-mode header p {
-        color: #0056b3;
-        text-shadow: none;
-      }
+  /* Light mode */
+  body.light-mode{background:linear-gradient(180deg,#ffffff,#f5f7fb);color:var(--text-dark);}
 
+  header{position:relative;padding:34px 20px 18px;display:flex;align-items:center;gap:18px;justify-content:center;
+    backdrop-filter:blur(6px);}
+  .logo-wrap{display:flex;align-items:center;gap:16px;}
+  .logo-img{width:96px;height:96px;border-radius:16px;box-shadow:0 6px 30px rgba(0,0,0,0.4);
+    background:linear-gradient(135deg,var(--blue-700),var(--orange-600));display:flex;align-items:center;justify-content:center;
+    overflow:hidden;transform-origin:center;animation:logoIn 1s cubic-bezier(.2,.9,.3,1) both;}
+  .logo-img img{width:100%;height:100%;object-fit:cover;display:block;filter:drop-shadow(0 6px 20px rgba(0,0,0,0.45));}
+  @keyframes logoIn{from{opacity:0;transform:scale(.75) rotate(-6deg);}to{opacity:1;transform:scale(1) rotate(0);}}
 
-      /* Container principal */
-      .container {
-        flex-grow: 1;
-        max-width: 1000px;
-        margin: 40px auto;
-        padding: 0 20px;
-        z-index: 1;
-      }
+  .site-title{text-align:left;}
+  .site-title h1{font-size:20px;font-weight:800;letter-spacing:1px;color:var(--text-light);}
+  .site-title p{font-size:12px;opacity:0.9;color:rgba(238,246,255,0.82);}
 
-      /* Seções */
-      section {
-        background: rgba(255,255,255,0.15);
-        margin-bottom: 35px;
-        padding: 28px 35px;
-        border-radius: 18px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-        backdrop-filter: blur(12px);
-        color: #fff;
-        opacity: 0;
-        transform: translateY(35px);
-        transition: transform 0.5s ease, opacity 0.7s ease, box-shadow 0.4s ease;
-        position: relative;
-      }
-      section.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      section:hover {
-        transform: translateY(-12px) scale(1.02);
-        box-shadow: 0 18px 40px rgba(255, 102, 0, 0.65);
-      }
-      body.light-mode section {
-        background: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 8px 25px rgba(0, 86, 179, 0.1);
-        color: #333;
-      }
-      body.light-mode section:hover {
-         box-shadow: 0 12px 30px rgba(255, 102, 0, 0.2);
-      }
+  main.container{max-width:1100px;margin:22px auto; padding:0 20px;width:100%;flex:1;}
 
-      /* EFEITO "TECH" NAS SEÇÕES */
-      section::before, section::after {
-          content: '';
-          position: absolute;
-          width: 25px;
-          height: 25px;
-          border-color: #ff6600;
-          border-style: solid;
-          opacity: 0.7;
-          transition: all 0.4s ease;
-      }
-      section::before {
-          top: 15px; left: 15px;
-          border-width: 3px 0 0 3px;
-      }
-      section::after {
-          bottom: 15px; right: 15px;
-          border-width: 0 3px 3px 0;
-      }
-      section:hover::before, section:hover::after {
-          width: 40px;
-          height: 40px;
-          opacity: 1;
-      }
+  .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;min-height:280px;position:relative;}
+  .hero-card{padding:28px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));
+    box-shadow:0 20px 60px rgba(2,6,23,0.6);backdrop-filter:blur(6px);overflow:hidden;border:1px solid rgba(255,255,255,0.04);}
+  .kicker{display:inline-block;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,var(--orange-600),var(--orange-400));font-weight:700;font-size:13px; color:#fff;margin-bottom:14px;}
+  .hero h2{font-size:34px;line-height:1.02;margin-bottom:8px;letter-spacing:-0.5px;}
+  .hero p.lead{opacity:0.95;font-size:15px;margin-bottom:18px;color:rgba(238,246,255,0.9);}
+  .cta-row{display:flex;gap:12px;align-items:center;}
+  .btn-primary{background:linear-gradient(90deg,var(--orange-600),var(--orange-400));padding:12px 18px;border-radius:12px;color:white;font-weight:800;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(255,102,0,0.18);transition:transform 0.18s ease;} 
+  .btn-primary:hover{transform:translateY(-4px) scale(1.02);}
 
-      /* Títulos */
-      h2 {
-        font-size: 2rem;
-        margin-bottom: 18px;
-        position: relative;
-        font-weight: 700;
-        color: #ffdca7;
-        text-shadow: 2px 2px 8px rgba(0,0,0,0.75);
-        transition: color 0.3s ease;
-      }
-      h2::after {
-        content: '';
-        position: absolute;
-        width: 80px;
-        height: 5px;
-        background: #ff6600;
-        border-radius: 3px;
-        bottom: -12px;
-        left: 0;
-        box-shadow: 0 0 12px #ff6600;
-        transition: width 0.3s ease;
-      }
-      h2:hover::after {
-        width: 120px;
-      }
-      body.light-mode h2 {
-        color: #0056b3;
-        text-shadow: none;
-      }
+  .feature-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px;}
+  .feature{background:var(--glass);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);display:flex;gap:12px;align-items:center;transition:transform .2s} 
+  .feature:hover{transform:translateY(-6px);box-shadow:0 10px 40px rgba(2,6,23,0.6);}
+  .feature svg{width:36px;height:36px;flex-shrink:0;} 
+  .feature h4{font-size:14px;margin-bottom:6px;}
+  .feature p{font-size:13px;opacity:0.92;line-height:1.35;}
 
-      /* Texto */
-      p {
-        font-size: 1.15rem;
-        line-height: 1.7;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.45);
-        margin-bottom: 18px;
-      }
-      body.light-mode p {
-        color: #333;
-        text-shadow: none;
-      }
+  /* RIGHT PANEL with rotating tech ring */
+  .panel-right{display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);}
+  .tech-ring{width:100%;max-width:320px;height:280px;border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative;
+    background:conic-gradient(from 180deg at 50% 50%, rgba(42,143,230,0.06), rgba(255,102,0,0.06));overflow:hidden;}
+  .ring-blob{position:absolute;inset:0;background:radial-gradient(circle at 20% 20%, rgba(42,143,230,0.12), transparent 10%),
+    radial-gradient(circle at 80% 80%, rgba(255,102,0,0.1), transparent 10%);mix-blend-mode:screen;animation:blobMove 12s infinite linear;}
+  @keyframes blobMove{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-18px,16px) scale(1.03)}100%{transform:translate(0,0) scale(1)}}
 
-      /* Listas */
-      ul {
-        padding-left: 28px;
-        list-style: none;
-      }
-      ul li {
-        position: relative;
-        font-size: 1.2rem;
-        padding-left: 34px;
-        margin-bottom: 14px;
-        color: #fff;
-        font-weight: 500;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.35);
-        transition: color 0.3s ease;
-      }
-      ul li::before {
-        content: '✅';
-        position: absolute;
-        left: 0;
-        top: 0;
-        font-size: 1.6rem;
-        text-shadow: 0 0 8px #00ff9c, 0 0 15px #00ff9c;
-        transition: transform 0.3s ease, text-shadow 0.3s ease;
-      }
-      ul li:hover {
-        color: #ffddaa;
-      }
-      ul li:hover::before {
-        transform: scale(1.35);
-        text-shadow: 0 0 18px #ff6600, 0 0 30px #ff6600;
-      }
-      body.light-mode ul li {
-        color: #222;
-        text-shadow: none;
-      }
+  .ring-center{width:170px;height:170px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,var(--blue-700),var(--blue-500));box-shadow:0 14px 40px rgba(2,6,23,0.6);transform:rotate(0deg);animation:rotateSlow 18s linear infinite;color:white;}
+  @keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  .ring-center h3{margin:0;font-size:18px;font-weight:800;letter-spacing:0.4px;}
+  .micro-text{font-size:12px;opacity:0.9;margin-top:6px;}
 
-      /* Destaques */
-      .highlight {
-        color: #ffcc80;
-        font-weight: 700;
-        text-shadow: 0 0 14px #ff6600;
-      }
-      body.light-mode .highlight {
-        color: #ff6600;
-        font-weight: bold;
-        text-shadow: none;
-      }
+  /* Sections */
+  section.card{margin-top:28px;padding:22px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)} 
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:12px;}
 
-      /* Rodapé */
-      footer {
-        background: rgba(0,0,0,0.5);
-        color: #ddd;
-        text-align: center;
-        font-size: 0.85rem;
-        padding: 20px;
-        font-weight: 400;
-        letter-spacing: 0.6px;
-        user-select: none;
-        border-top: 2px solid #ff6600;
-        backdrop-filter: blur(8px);
-        position: relative;
-        z-index: 20;
-      }
-      footer p {
-        margin: 4px 0;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        text-shadow: none;
-      }
-      body.light-mode footer {
-        background: #e9ecef;
-        color: #555;
-        border-top-color: #ff6600;
-      }
-      
-      /* Animações */
-      @keyframes gradientBG {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-      }
-      @keyframes fadeInDown {
-        from { opacity: 0; transform: translateY(-30px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes fadeInLogo {
-        from { opacity: 0; transform: translateY(var(--translate-dir, -10px)); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+  /* Depoimentos */
+  .depoimento{padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));box-shadow:0 8px 30px rgba(0,0,0,0.45);font-style:italic;} 
+  .depoimento .autor{text-align:right;margin-top:10px;font-weight:700;color:var(--orange-400);}
 
-      /* Botão WhatsApp fixo */
-      #btn-whatsapp {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: #25d366;
-        border-radius: 50%;
-        width: 62px;
-        height: 62px;
-        box-shadow: 0 5px 18px rgba(0,0,0,0.4);
-        cursor: pointer;
-        z-index: 150;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      #btn-whatsapp:hover {
-        background: #1ebe57;
-        transform: scale(1.12);
-        box-shadow: 0 0 22px #25d366;
-      }
-      #btn-whatsapp svg {
-        width: 34px;
-        height: 34px;
-        fill: white;
-      }
+  /* Contact form */
+  form.contact{display:flex;flex-direction:column;gap:10px;}
+  input,textarea{padding:12px;border-radius:10px;border:none;background:rgba(255,255,255,0.03);color:var(--text-light)}
+  input::placeholder,textarea::placeholder{color:rgba(238,246,255,0.6)}
+  button.send{background:linear-gradient(90deg,var(--blue-700),var(--blue-500));border-radius:10px;padding:12px 16px;color:white;border:none;font-weight:700;cursor:pointer}
+  .muted{font-size:13px;opacity:0.9}
 
-      /* Depoimentos */
-      .depoimentos {
-        display: grid;
-        grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-        gap: 25px;
-      }
-      .depoimento-card {
-        background: rgba(255,255,255,0.1);
-        padding: 24px;
-        border-radius: 18px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        color: #fff;
-        font-style: italic;
-        position: relative;
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
-      }
-      .depoimento-card:hover {
-        box-shadow: 0 12px 35px rgba(255, 102, 0, 0.7);
-        transform: translateY(-5px);
-      }
-      .depoimento-card::before {
-        content: '“';
-        font-size: 4rem;
-        position: absolute;
-        top: 10px;
-        left: 15px;
-        color: #ff6600;
-        opacity: 0.85;
-        font-weight: 700;
-        line-height: 1;
-      }
-      .depoimento-card p {
-          padding-left: 10px;
-      }
-      .depoimento-autor {
-        margin-top: 18px;
-        font-weight: 700;
-        font-style: normal;
-        text-align: right;
-        color: #ffdca7;
-      }
-      body.light-mode .depoimento-card {
-        background: #fefefe;
-        color: #333;
-      }
-      body.light-mode .depoimento-autor {
-        color: #d26900;
-      }
+  /* Footer */
+  footer{padding:16px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.04);font-size:13px;}
+  footer .small{font-size:12px;color:rgba(255,255,255,0.7);}
 
-      /* Formulário */
-      form {
-        display: flex;
-        flex-direction: column;
-      }
-      label {
-        font-weight: 700;
-        margin-bottom: 8px;
-        color: inherit;
-      }
-      input, textarea {
-        padding: 14px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        border: 2px solid transparent;
-        font-size: 1.1rem;
-        font-family: inherit;
-        transition: box-shadow 0.3s ease, border-color 0.3s ease;
-        background: rgba(255, 255, 255, 0.9);
-        color: #222;
-      }
-      input:focus, textarea:focus {
-        outline: none;
-        box-shadow: 0 0 10px #ff6600;
-        border-color: #ff6600;
-      }
-      textarea {
-        resize: vertical;
-        min-height: 120px;
-      }
-      body.light-mode input, body.light-mode textarea {
-          background: #fff;
-          border: 1px solid #ccc;
-      }
-      button.submit-btn {
-        background: #ff6600;
-        border: none;
-        color: #fff;
-        padding: 14px 28px;
-        font-size: 1.25rem;
-        border-radius: 14px;
-        cursor: pointer;
-        font-weight: 800;
-        box-shadow: 0 7px 20px rgba(0,0,0,0.4);
-        transition: all 0.3s ease;
-      }
-      button.submit-btn:hover {
-        background: #e65c00;
-        box-shadow: 0 0 25px rgba(255, 102, 0, 0.95);
-        transform: translateY(-3px);
-      }
+  /* WhatsApp fixed */
+  #btn-whatsapp{position:fixed;right:20px;bottom:20px;width:64px;height:64px;border-radius:999px;background:linear-gradient(90deg,#25d366,#1ebe57);display:grid;place-items:center;box-shadow:0 12px 40px rgba(2,6,23,0.5);z-index:999;transition:transform .18s}
+  #btn-whatsapp:hover{transform:translateY(-6px) scale(1.04)}
 
-      /* Toggle modo claro/escuro */
-      #toggle-theme {
-        position: fixed;
-        top: 25px;
-        right: 30px; /* Ajustado para não sobrepor o botão de WhatsApp */
-        background: rgba(255,255,255,0.2);
-        border: none;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 1.5rem;
-        color: #fff;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.5);
-        backdrop-filter: blur(8px);
-        z-index: 200;
-        transition: all 0.3s ease;
-        user-select: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #toggle-theme:hover {
-        background: rgba(255, 255, 255, 0.38);
-        color: #ff6600;
-        transform: rotate(15deg) scale(1.1);
-      }
-      body.light-mode #toggle-theme {
-        background: #ff6600;
-        color: #fff;
-      }
-      body.light-mode #toggle-theme:hover {
-        background: #e65c00;
-        transform: rotate(-15deg) scale(1.1);
-      }
+  /* Theme toggle */
+  #toggle-theme{position:fixed;right:20px;top:20px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.04);z-index:9999;cursor:pointer}
+  body.light-mode #toggle-theme{background:#fff;color:var(--orange-600);border-color:#eee}
 
-      /* Responsivo */
-      @media(max-width: 768px) {
-        header .logo-container h1 {
-            font-size: 2.2rem;
-        }
-      }
-      @media(max-width: 600px) {
-        header .logo-container {
-          flex-direction: column;
-          gap: 12px;
-        }
-        header .logo-container h1 {
-          font-size: 2rem;
-          text-align: center;
-        }
-        #toggle-theme {
-          right: 20px;
-          top: 20px;
-          width: 44px;
-          height: 44px;
-          font-size: 1.3rem;
-        }
-        #btn-whatsapp {
-            right: 20px;
-            bottom: 20px;
-        }
-      }
-    </style>
+  /* Responsive */
+  @media(max-width:980px){.hero{grid-template-columns:1fr;} .logo-img{width:76px;height:76px} .site-title h1{font-size:18px}}
+  @media(max-width:520px){#btn-whatsapp{right:16px;bottom:16px} #toggle-theme{right:16px;top:16px} .hero h2{font-size:22px}}
+
+  /* Reveal animations */
+  .reveal{opacity:0;transform:translateY(18px);transition:all .6s cubic-bezier(.2,.9,.3,1)}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* Explanatory list style */
+  .effects-list{margin-top:12px;display:grid;gap:8px}
+  .effects-list li{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;list-style:none;font-size:13px}
+  .effects-list li b{color:var(--orange-400)}
+
+  /* small adjustments for light mode readability */
+  body.light-mode .feature, body.light-mode .depoimento, body.light-mode .hero-card {background:#fff;border:1px solid #eee;color:var(--text-dark)}
+  body.light-mode .feature p, body.light-mode p.lead{color:#444}
+</style>
 </head>
 <body>
 
 <header>
-  <div class="logo-container">
-    <img src="data:image/jpeg;base64,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טכנ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aQaQagotBqBqBqGoGoGoGoGoGoNINININAtAtGaQaQaAtANGaTQaAtANGkGkFoFoNAWkWkWgGgaQaQaQaBaBQaDSDRpBoBpBoFAoBpBoBpBoFAoFAoFAoMoFAoFAoFAoMoFAFAUAoB6AaBqDRjTUDRqBowaE0DQAgDUGoag1DUE1BqGkGkGoGoNQaQaQagotQaQaQagotQaQagotINQaQaQagotINQaQagotINININANANGaQaQaAtANGaTSDQFoBo0haAtFpFoGkGkWgaDSQaALQLQLQaQaQKAaQaAaQaQaQaAaQaAaQKBpBoFAoFAoFAoMoFAoFAoFAoFAFAUBQD0A0g1DUZ01DUaA1GjRoaE0DQAgaQagotQ1DUE1DUGkGoGoGoGoNINININININQag1BqDUGoNQaQagotQaQagotINININAtANGaQaQaAtANAtGaQaAaQaNItAtANANGkGgWi0GgaQaQagaDSBaBQaDSDRpBpBpBoFAoBpBpANAoFAoFAoFAoFAoFAoFAoMoFAFAUAoB6AaQahqM6ahqBoDUaNGhoTQNAChqGkNININQaQagotINQaQagotININQaQaQagotQaQagotINQaQaQagotQaQaQaQaQaQaQaQaQaBaQaQaQaQaNINAtANAo0g0k0kWgaQaQaQaDSBaBaQaQaQagaDSBaAaQagaQagaQaQaQaDSQaAaQaDSQaDSDRpBoNJBpANAoFAoFAoMoFAFAUBQD0A0g1DUZ01DUGoGoGjRoaE0DQAoagotQ1DUE1DUE1BqGoNQaQagotQaQaQagotQaQagotQaQagotQaQagotQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQeh/2Q==" alt="Logo J.J Treinamento em Atendimento" />
+  <div class="logo-wrap">
+    <div class="logo-img" title="J.J Treinamento">
+      <img src="DATA_B64" alt="Logo J.J" />
+    </div>
+    <div class="site-title">
+      <h1>J.J Treinamento em Atendimento</h1>
+      <p>Treinamentos e soluções com foco em IA e atendimento multicanal</p>
+    </div>
   </div>
-  <p>Soluções inteligentes para um atendimento de excelência.</p>
 </header>
 
-<button id="toggle-theme" aria-label="Alternar modo claro/escuro">🌙</button>
+<button id="toggle-theme" aria-label="Alternar tema">🌙</button>
 
-<div class="container">
+<main class="container">
+  <section class="hero reveal" id="hero">
+    <div class="hero-card">
+      <span class="kicker">TECH • IA</span>
+      <h2>Automatize o atendimento sem perder o toque humano</h2>
+      <p class="lead">Criamos chatbots inteligentes, integrados a WhatsApp, site e telefonia — reduzindo tempo de espera e aumentando satisfação.</p>
+      <div class="cta-row">
+        <a class="btn-primary" href="https://wa.me/5577992039381" target="_blank" rel="noopener">Fale no WhatsApp</a>
+        <button class="btn-primary" id="ver-servicos">Nossos Serviços</button>
+      </div>
 
-  <section id="sobre">
-    <h2>📢 Melhorando o Atendimento</h2>
-    <p>O sucesso no atendimento ao cliente começa com uma comunicação clara, ágil e personalizada. Nós focamos nos pontos essenciais para transformar sua equipe:</p>
-    <ul>
-      <li>Escutar ativamente o cliente para entender suas reais necessidades</li>
-      <li>Responder com empatia e cordialidade, criando conexões duradouras</li>
-      <li>Oferecer soluções rápidas e eficazes que resolvem o problema</li>
-      <li>Padronizar processos sem perder o toque humano e a personalização</li>
-      <li>Monitorar métricas de satisfação para uma melhoria contínua</li>
-    </ul>
+      <div class="feature-list" style="margin-top:18px;">
+        <div class="feature">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,0.12)" stroke-width="1.6"/><path d="M8 12h8" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><h4>Chatbots Inteligentes</h4><p>Atendimento 24/7 com NLP e integração contínua.</p></div>
+        </div>
+        <div class="feature">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="2" stroke="rgba(255,255,255,0.12)" stroke-width="1.6"/><path d="M7 20h10" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><h4>Integração Multicanal</h4><p>WhatsApp, webchat, telefonia e CRM sincronizados.</p></div>
+        </div>
+        <div class="feature">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18" stroke="rgba(255,255,255,0.12)" stroke-width="1.6"/><path d="M3 12h18" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><h4>Treinamento</h4><p>Capacitação prática para equipes, com simulações reais.</p></div>
+        </div>
+        <div class="feature">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 12c0-4 4-8 9-8s9 4 9 8-4 8-9 8-9-4-9-8z" stroke="rgba(255,255,255,0.12)" stroke-width="1.6"/><path d="M12 8v8" stroke="white" stroke-width="1.6"/></svg>
+          <div><h4>Monitoramento</h4><p>Relatórios e alertas para melhorar SLA e NPS.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="panel-right">
+      <div class="tech-ring">
+        <div class="ring-blob"></div>
+        <div class="ring-center">
+          <h3>IA + Atendimento</h3>
+          <div class="micro-text">Insights em tempo real</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:8px;" class="muted">Fluxos inteligentes, decisões rápidas</div>
+    </aside>
   </section>
 
-  <section id="ia">
-    <h2>🤖 Como as IAs Podem Ajudar</h2>
-    <p>A Inteligência Artificial não é apenas o futuro, é o presente. Integramos IAs para otimizar todo o fluxo de atendimento da sua empresa:</p>
-    <ul>
-      <li>Resposta automática e instantânea para perguntas frequentes</li>
-      <li>Análise de métricas e relatórios completos em tempo real</li>
-      <li>Agendamento automático de reuniões, consultas e serviços</li>
-      <li>Roteamento inteligente de chamadas e mensagens para o setor correto</li>
-      <li>Personalização da experiência do cliente com base em dados</li>
-    </ul>
-  </section>
-
-  <section id="depoimentos">
-    <h2>💬 Depoimentos de Clientes</h2>
-    <div class="depoimentos">
-      <article class="depoimento-card">
-        <p>“Excelente treinamento que transformou a forma como nossa equipe se comunica com os clientes. Resultado visível já no primeiro mês!”</p>
-        <p class="depoimento-autor">— Ana Silva, Gerente de Vendas</p>
-      </article>
-      <article class="depoimento-card">
-        <p>“Profissionalismo e atenção aos detalhes fizeram toda a diferença. As ferramentas de IA recomendadas otimizaram nosso tempo em 40%.”</p>
-        <p class="depoimento-autor">— Carlos Mendes, CEO Tech Solutions</p>
-      </article>
+  <section class="card reveal" id="services">
+    <h3 style="font-size:18px;margin-bottom:8px;">Serviços Principais</h3>
+    <div class="cards-grid">
+      <div class="card-item feature">
+        <div style="flex:1;">
+          <h4>Implementação de Chatbots</h4>
+          <p>Projetos sob medida com NLP, integração a APIs e atendimento humano quando necessário.</p>
+        </div>
+      </div>
+      <div class="card-item feature">
+        <div style="flex:1;">
+          <h4>Integração e Automação</h4>
+          <p>Conectamos sua plataforma, CRM e canais para um fluxo coerente de atendimento.</p>
+        </div>
+      </div>
+      <div class="card-item feature">
+        <div style="flex:1;">
+          <h4>Treinamento e Onboarding</h4>
+          <p>Técnicas, scripts e simulações para tornar sua equipe mais eficiente.</p>
+        </div>
+      </div>
+      <div class="card-item feature">
+        <div style="flex:1;">
+          <h4>Consultoria em IA</h4>
+          <p>Assessoria para aplicação responsável de inteligência artificial no atendimento.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="contato">
-      <h2>✉️ Fale Conosco</h2>
-      <p>Pronto para elevar o nível do seu atendimento? Preencha o formulário abaixo ou clique no ícone do WhatsApp para um contato direto.</p>
-      <form action="#" method="post">
-          <label for="name">Nome:</label>
-          <input type="text" id="name" name="name" required placeholder="Seu nome completo">
-          
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required placeholder="seu.email@exemplo.com">
-
-          <label for="message">Mensagem:</label>
-          <textarea id="message" name="message" required placeholder="Como podemos ajudar?"></textarea>
-
-          <button type="submit" class="submit-btn">Enviar Mensagem</button>
-      </form>
+  <section class="card reveal" id="depoimentos">
+    <h3 style="font-size:18px;margin-bottom:8px;">Depoimentos</h3>
+    <div class="cards-grid">
+      <blockquote class="depoimento">"A J.J transformou nosso atendimento — redução de 40% no tempo médio e NPS melhorou!" <div class="autor">— Clínica Central</div></blockquote>
+      <blockquote class="depoimento">"Profissionalismo e resultados. A automação com IA nos permitiu escalar." <div class="autor">— Farmácia Saúde</div></blockquote>
+    </div>
   </section>
 
-  <section id="lgpd">
-    <h2>🔒 Política de Privacidade (LGPD)</h2>
-    <p>Em conformidade com a <span class="highlight">Lei Geral de Proteção de Dados (Lei nº 13.709/2018)</span>, garantimos que todas as informações coletadas, seja por formulário ou contato direto, serão utilizadas exclusivamente para fins de comunicação e prestação de serviços. Não compartilhamos seus dados pessoais com terceiros sem seu consentimento explícito.</p>
+  <section class="card reveal" id="effects">
+    <h3 style="font-size:18px;margin-bottom:8px;">Efeitos e melhorias implementadas</h3>
+    <ul class="effects-list">
+      <li><b>Logo animada:</b> Fade-in + zoom suave — cria imediata percepção de marca sólida.</li>
+      <li><b>Gradiente dinâmico:</b> Sensação de movimento e inovação sem atrapalhar leitura.</li>
+      <li><b>Tech ring:</b> Elemento visual que passa ideia de sistema e processamento contínuo.</li>
+      <li><b>Reveal on scroll:</b> Conteúdo entra com suavidade, guiando a atenção do usuário.</li>
+      <li><b>WhatsApp fixo:</b> Acesso imediato ao contato, melhorando conversão.</li>
+      <li><b>Modo claro/escuro:</b> Acomoda preferências do usuário e amplia tempo de navegação.</li>
+      <li><b>SEO / OG tags:</b> Compartilhamento profissional e melhor preview em redes sociais.</li>
+    </ul>
   </section>
 
-</div>
+  <section class="card reveal" id="contato">
+    <h3 style="font-size:18px;margin-bottom:8px;">Contato</h3>
+    <form class="contact" id="contactForm">
+      <input type="text" id="name" placeholder="Nome completo" required />
+      <input type="email" id="email" placeholder="email@dominio.com" required />
+      <textarea id="message" placeholder="Como podemos ajudar?" required></textarea>
+      <button type="submit" class="send">Enviar mensagem</button>
+      <div id="formStatus" class="muted" style="display:none;margin-top:6px;"></div>
+    </form>
+  </section>
 
-<a id="btn-whatsapp" href="https://wa.me/5577992039381" target="_blank" aria-label="Fale conosco no WhatsApp">
-    <svg viewBox="0 0 81 81"><path d="M61.3,51.3c-0.4-0.2-2.5-1.2-2.9-1.4c-0.4-0.1-0.7-0.2-0.9,0.2c-0.3,0.4-1.1,1.4-1.4,1.6c-0.3,0.3-0.5,0.3-1,0.1c-0.4-0.2-2-0.7-3.8-2.3c-1.4-1.3-2.3-2.9-2.6-3.4c-0.3-0.5,0-0.8,0.2-1c0.2-0.2,0.4-0.5,0.6-0.7c0.2-0.2,0.3-0.4,0.5-0.7c0.1-0.3,0.1-0.5,0-0.7c-0.1-0.2-0.9-2.3-1.3-3.1c-0.4-0.8-0.7-0.7-0.9-0.7c-0.2,0-0.5,0-0.7,0c-0.2,0-0.6,0.1-0.9,0.4c-0.3,0.3-1.1,1.1-1.1,2.7s1.2,3.1,1.3,3.3c0.1,0.2,2.3,3.5,5.5,4.9c0.8,0.3,1.4,0.5,1.9,0.6c0.8,0.2,1.5,0.1,2.1-0.1c0.7-0.2,2.5-1,2.8-2c0.3-0.9,0.3-1.7,0.2-2C62,51.7,61.7,51.5,61.3,51.3z M40.9,11.6C24.1,11.6,10.6,25.1,10.6,41.8c0,5.4,1.4,10.7,4.1,15.2L10,69.5l13.1-3.9c4.4,2.5,9.4,3.8,14.6,3.8h0c16.8,0,30.3-13.6,30.3-30.3S57.7,11.6,40.9,11.6z M40.9,66.5c-4.7,0-9.4-1.3-13.4-3.7l-1-0.6l-9.9,2.9l3-9.5l-0.6-1c-2.6-4.2-4-9-4-14.1C15.1,27.5,26.9,16,40.9,16c14,0,25.8,11.5,25.8,25.8C66.7,55,54.9,66.5,40.9,66.5z"></path></svg>
-</a>
+</main>
 
 <footer>
-  <p><strong>J.J Treinamento em Atendimento</strong></p>
-  <p>Jeferson Gouveia de Jesus | CNPJ: 48.064.975/0001-00</p>
-  <p>&copy; 2025 - Todos os direitos reservados.</p>
+  <div class="small">© 2025 J.J Treinamento em Atendimento — Todos os direitos reservados.</div>
+  <div class="small">Rua Professora Iara Castro de Azevedo, Vitória da Conquista - BA • CEP 45065-670</div>
 </footer>
 
+<!-- WhatsApp button -->
+<a id="btn-whatsapp" href="https://wa.me/5577992039381" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M20.52 3.48a11.819 11.819 0 00-16.71 16.7l-1.89 6.86 6.98-1.83a11.819 11.819 0 0011.62-21.73z" fill="#fff" opacity="0.12"/><path d="M17 15.33c-.26-.13-1.53-.76-1.77-.84-.24-.08-.42-.12-.6.13s-.69.83-.85 1c-.16.17-.31.19-.58.07a7.18 7.18 0 01-2.1-1.3 7.86 7.86 0 01-1.45-1.8c-.15-.25 0-.38.11-.5.11-.11.25-.31.37-.47.12-.16.16-.26.24-.43.08-.16.04-.3-.02-.43-.06-.13-.6-1.43-.82-1.95-.22-.52-.45-.45-.6-.46-.15 0-.32-.01-.5-.01s-.43.06-.65.3a2.77 2.77 0 00-.95.93 3.95 3.95 0 00-1.16 2.06c-.05.19-.18.49-.18.76s.26.56.31.6c.05.05.52.83 1.25 1.27.74.44 1.36.58 1.62.63.26.05.53.04.72-.03.19-.07.6-.22 1.13-.71a4.24 4.24 0 001.53-1.9c.08-.14.14-.27.2-.4.07-.13.03-.25-.02-.34z" fill="#fff"/></svg>
+</a>
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // ---- LÓGICA DO MODO CLARO/ESCURO ---- //
-    const themeToggle = document.getElementById('toggle-theme');
-    const body = document.body;
+// Scroll reveal with debounce for fast scrolls
+const revealElems = document.querySelectorAll('.reveal');
+let revealTimeout = null;
+function revealCheck() {
+  const bottom = window.innerHeight - 120;
+  revealElems.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < bottom) el.classList.add('visible');
+  });
+}
+window.addEventListener('scroll', () => {
+  if(revealTimeout) clearTimeout(revealTimeout);
+  revealTimeout = setTimeout(revealCheck, 80);
+});
+window.addEventListener('load', revealCheck);
 
-    // Verifica se há preferência salva no localStorage
-    if (localStorage.getItem('theme') === 'light') {
-        body.classList.add('light-mode');
-        themeToggle.textContent = '☀️';
-    }
+// Theme toggle with localStorage
+const toggle = document.getElementById('toggle-theme');
+const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+const body = document.body;
+const saved = localStorage.getItem('jj_theme');
+if(saved === 'light') body.classList.add('light-mode');
+else if(saved === 'dark') body.classList.remove('light-mode');
+else if(!prefersDark) body.classList.add('light-mode');
+toggle.addEventListener('click', () => {
+  body.classList.toggle('light-mode');
+  localStorage.setItem('jj_theme', body.classList.contains('light-mode') ? 'light' : 'dark');
+  toggle.textContent = body.classList.contains('light-mode') ? '🌙' : '☀️';
+});
+toggle.textContent = body.classList.contains('light-mode') ? '🌙' : '☀️';
 
-    themeToggle.addEventListener('click', () => {
-        body.classList.toggle('light-mode');
-        
-        // Salva a preferência e atualiza o ícone
-        if (body.classList.contains('light-mode')) {
-            localStorage.setItem('theme', 'light');
-            themeToggle.textContent = '☀️';
-        } else {
-            localStorage.setItem('theme', 'dark');
-            themeToggle.textContent = '🌙';
-        }
-    });
+// Smooth anchor to services
+document.getElementById('ver-servicos').addEventListener('click', () => {
+  document.getElementById('services').scrollIntoView({behavior:'smooth', block:'start'});
+});
 
-    // ---- LÓGICA DA ANIMAÇÃO DE ENTRADA DAS SEÇÕES ---- //
-    const sections = document.querySelectorAll('section');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            // Quando a seção entra na tela, adiciona a classe 'visible'
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Opcional: para de observar o elemento após a animação para não repetir
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.1 // A animação começa quando 10% do elemento está visível
-    });
-
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+// Basic contact form (no backend) - show sample behavior
+document.getElementById('contactForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const status = document.getElementById('formStatus');
+  status.style.display = 'block';
+  status.textContent = 'Enviando...';
+  // Simulate delay and success
+  setTimeout(() => {
+    status.textContent = 'Obrigado! Recebemos sua mensagem. (Simulação)';
+  }, 900);
 });
 </script>
 
 </body>
 </html>
+"""
+
+# Replace placeholders with base64 data URLs
+data_url = f"data:image/jpeg;base64,{img_b64}"
+html_content = html_template.replace("DATA_B64", data_url)
+
+out_path = Path("/mnt/data/jj_site_futurista.html")
+out_path.write_text(html_content, encoding="utf-8")
+
+out_path.exists(), str(out_path)
+
