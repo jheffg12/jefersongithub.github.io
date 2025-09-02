@@ -1,19 +1,10 @@
-from base64 import b64encode
-from pathlib import Path
-
-# Fix braces in f-string by using triple quotes without f-string formatting for the large HTML, then insert base64 where needed.
-img_path = Path("/mnt/data/Perfil JJ.jpg")
-img_data = img_path.read_bytes()
-img_b64 = b64encode(img_data).decode('utf-8')
-
-html_template = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>J.J Treinamento em Atendimento — Futurista</title>
 <meta name="description" content="Treinamentos e soluções em atendimento com foco em IA, chatbots e integração multicanal." />
-<!-- Open Graph -->
 <meta property="og:title" content="J.J Treinamento em Atendimento" />
 <meta property="og:description" content="Treinamentos e soluções em atendimento com foco em IA, chatbots e integração multicanal." />
 <meta property="og:image" content="DATA_B64" />
@@ -38,8 +29,8 @@ html_template = """<!DOCTYPE html>
   html,body{height:100%;}
   body{font-family:'Poppins',system-ui,Arial;min-height:100vh;display:flex;flex-direction:column;
     background: radial-gradient(1200px 600px at 10% 10%, rgba(42,143,230,0.12), transparent 8%),
-                radial-gradient(1000px 500px at 90% 90%, rgba(255,102,0,0.07), transparent 8%),
-                linear-gradient(180deg, var(--blue-900), #071a2e 40%, #071a2e 60%, #01121a);
+              radial-gradient(1000px 500px at 90% 90%, rgba(255,102,0,0.07), transparent 8%),
+              linear-gradient(180deg, var(--blue-900), #071a2e 40%, #071a2e 60%, #01121a);
     color:var(--text-light);scroll-behavior:smooth;transition:background 0.4s,color 0.4s}
 
   /* Light mode */
@@ -67,13 +58,13 @@ html_template = """<!DOCTYPE html>
   .hero h2{font-size:34px;line-height:1.02;margin-bottom:8px;letter-spacing:-0.5px;}
   .hero p.lead{opacity:0.95;font-size:15px;margin-bottom:18px;color:rgba(238,246,255,0.9);}
   .cta-row{display:flex;gap:12px;align-items:center;}
-  .btn-primary{background:linear-gradient(90deg,var(--orange-600),var(--orange-400));padding:12px 18px;border-radius:12px;color:white;font-weight:800;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(255,102,0,0.18);transition:transform 0.18s ease;} 
+  .btn-primary{background:linear-gradient(90deg,var(--orange-600),var(--orange-400));padding:12px 18px;border-radius:12px;color:white;font-weight:800;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(255,102,0,0.18);transition:transform 0.18s ease;}  
   .btn-primary:hover{transform:translateY(-4px) scale(1.02);}
 
   .feature-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px;}
-  .feature{background:var(--glass);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);display:flex;gap:12px;align-items:center;transition:transform .2s} 
+  .feature{background:var(--glass);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);display:flex;gap:12px;align-items:center;transition:transform .2s}  
   .feature:hover{transform:translateY(-6px);box-shadow:0 10px 40px rgba(2,6,23,0.6);}
-  .feature svg{width:36px;height:36px;flex-shrink:0;} 
+  .feature svg{width:36px;height:36px;flex-shrink:0;}  
   .feature h4{font-size:14px;margin-bottom:6px;}
   .feature p{font-size:13px;opacity:0.92;line-height:1.35;}
 
@@ -92,11 +83,11 @@ html_template = """<!DOCTYPE html>
   .micro-text{font-size:12px;opacity:0.9;margin-top:6px;}
 
   /* Sections */
-  section.card{margin-top:28px;padding:22px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)} 
+  section.card{margin-top:28px;padding:22px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}  
   .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:12px;}
 
   /* Depoimentos */
-  .depoimento{padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));box-shadow:0 8px 30px rgba(0,0,0,0.45);font-style:italic;} 
+  .depoimento{padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));box-shadow:0 8px 30px rgba(0,0,0,0.45);font-style:italic;}  
   .depoimento .autor{text-align:right;margin-top:10px;font-weight:700;color:var(--orange-400);}
 
   /* Contact form */
@@ -132,8 +123,8 @@ html_template = """<!DOCTYPE html>
   .effects-list li b{color:var(--orange-400)}
 
   /* small adjustments for light mode readability */
-  body.light-mode .feature, body.light-mode .depoimento, body.light-mode .hero-card {background:#fff;border:1px solid #eee;color:var(--text-dark)}
-  body.light-mode .feature p, body.light-mode p.lead{color:#444}
+  body.light-mode .feature, body.light-mode .depoimento, body.light-mode .hero-card, body.light-mode section.card {background:#fff;border:1px solid #eee;color:var(--text-dark)}
+  body.light-mode .feature p, body.light-mode p.lead, body.light-mode .muted {color:#444}
 </style>
 </head>
 <body>
@@ -257,14 +248,43 @@ html_template = """<!DOCTYPE html>
     </form>
   </section>
 
-</main>
+  <section class="card reveal" id="privacy">
+    <h3 style="font-size:18px;margin-bottom:12px;">Política de Privacidade</h3>
+    <div class="muted">
+      <p style="margin-bottom: 10px;">A sua privacidade é importante para nós. É política do JJ treinamento em atendimento respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site JJ treinamento em atendimento, e outros sites que possuímos e operamos.</p>
+      <p style="margin-bottom: 10px;">Solicitamos informações pessoais apenas quando realmente precisamos delas para lhe fornecer um serviço. Fazemo-lo por meios justos e legais, com o seu conhecimento e consentimento. Também informamos por que estamos coletando e como será usado.</p>
+      <p style="margin-bottom: 10px;">Apenas retemos as informações coletadas pelo tempo necessário para fornecer o serviço solicitado. Quando armazenamos dados, protegemos dentro de meios comercialmente aceitáveis para evitar perdas e roubos, bem como acesso, divulgação, cópia, uso ou modificação não autorizados.</p>
+      <p style="margin-bottom: 10px;">Não compartilhamos informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
+      <h4 style="font-size:15px; margin-top:15px; margin-bottom:8px;">Compromisso do Usuário</h4>
+      <p>O usuário se compromete a fazer uso adequado dos conteúdos e da informação que o JJ treinamento em atendimento oferece no site e com caráter enunciativo, mas não limitativo:</p>
+      <ul style="list-style-position: inside; margin-left: 10px; margin-top: 10px; display: grid; gap: 8px;">
+        <li>A) Não se envolver em atividades que sejam ilegais ou contrárias à boa fé e à ordem pública;</li>
+        <li>B) Não difundir propaganda ou conteúdo de natureza racista, xenofóbica, ou sobre azar, qualquer tipo de pornografia ilegal, de apologia ao terrorismo ou contra os direitos humanos;</li>
+        <li>C) Não causar danos aos sistemas físicos (hardwares) e lógicos (softwares) do JJ treinamento em atendimento, de seus fornecedores ou terceiros.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card reveal" id="data-deletion">
+    <h3 style="font-size:18px;margin-bottom:12px;">Política de Exclusão de Dados</h3>
+    <div class="muted">
+      <p style="margin-bottom: 10px;">O usuário tem o direito de solicitar a exclusão de seus dados pessoais a qualquer momento. Para solicitar a exclusão de seus dados, por favor, envie um e-mail para <strong>jefersong.consultoria@gmail.com</strong> com o assunto "Solicitação de Exclusão de Dados".</p>
+      <p style="margin-bottom: 10px;">No corpo do e-mail, por favor, inclua as informações necessárias para que possamos identificar e remover seus dados de nossos registros, como nome completo e e-mail cadastrado.</p>
+      <p style="margin-bottom: 10px;">Após o recebimento da sua solicitação, nossa equipe irá processar o pedido e a exclusão dos seus dados será concluída em um prazo de até 30 dias. Você receberá uma confirmação por e-mail assim que o processo for finalizado.</p>
+    </div>
+  </section>
+  </main>
 
 <footer>
+  <div class="small" style="margin-bottom: 12px;">
+    <a href="#privacy" style="color: inherit; text-decoration: underline; margin: 0 10px;">Política de Privacidade</a>
+    <span style="opacity: 0.5;">•</span>
+    <a href="#data-deletion" style="color: inherit; text-decoration: underline; margin: 0 10px;">Exclusão de Dados</a>
+  </div>
   <div class="small">© 2025 J.J Treinamento em Atendimento — Todos os direitos reservados.</div>
   <div class="small">Rua Professora Iara Castro de Azevedo, Vitória da Conquista - BA • CEP 45065-670</div>
 </footer>
 
-<!-- WhatsApp button -->
 <a id="btn-whatsapp" href="https://wa.me/5577992039381" target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M20.52 3.48a11.819 11.819 0 00-16.71 16.7l-1.89 6.86 6.98-1.83a11.819 11.819 0 0011.62-21.73z" fill="#fff" opacity="0.12"/><path d="M17 15.33c-.26-.13-1.53-.76-1.77-.84-.24-.08-.42-.12-.6.13s-.69.83-.85 1c-.16.17-.31.19-.58.07a7.18 7.18 0 01-2.1-1.3 7.86 7.86 0 01-1.45-1.8c-.15-.25 0-.38.11-.5.11-.11.25-.31.37-.47.12-.16.16-.26.24-.43.08-.16.04-.3-.02-.43-.06-.13-.6-1.43-.82-1.95-.22-.52-.45-.45-.6-.46-.15 0-.32-.01-.5-.01s-.43.06-.65.3a2.77 2.77 0 00-.95.93 3.95 3.95 0 00-1.16 2.06c-.05.19-.18.49-.18.76s.26.56.31.6c.05.05.52.83 1.25 1.27.74.44 1.36.58 1.62.63.26.05.53.04.72-.03.19-.07.6-.22 1.13-.71a4.24 4.24 0 001.53-1.9c.08-.14.14-.27.2-.4.07-.13.03-.25-.02-.34z" fill="#fff"/></svg>
 </a>
@@ -317,18 +337,17 @@ document.getElementById('contactForm').addEventListener('submit', (e) => {
     status.textContent = 'Obrigado! Recebemos sua mensagem. (Simulação)';
   }, 900);
 });
+
+// Smooth scroll for footer links to policies
+document.querySelectorAll('footer a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+    });
+  });
+});
 </script>
 
 </body>
 </html>
-"""
-
-# Replace placeholders with base64 data URLs
-data_url = f"data:image/jpeg;base64,{img_b64}"
-html_content = html_template.replace("DATA_B64", data_url)
-
-out_path = Path("/mnt/data/jj_site_futurista.html")
-out_path.write_text(html_content, encoding="utf-8")
-
-out_path.exists(), str(out_path)
-
